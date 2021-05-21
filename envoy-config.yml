@@ -24,9 +24,10 @@ static_resources:
               - match: { prefix: "/" , grpc: {}}  # 3a grpc:{} means that requests are only forwarded if they are found in the grpc service definition, returning 404 for others
                 route: { cluster: grpc-backend-services, timeout: { seconds: 60 } }   #3b
           http_filters:
-          - name: envoy.grpc_json_transcoder
+          - name: envoy.filters.http.grpc_json_transcoder
             # configuration docs: https://github.com/envoyproxy/envoy/blob/master/api/envoy/config/filter/http/transcoder/v2/transcoder.proto
-            config:
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
               proto_descriptor: "/data/greeting_service_definition.pb"             #4
               services: ["helloworld.HelloService"]                        #5
               print_options:
