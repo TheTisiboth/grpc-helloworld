@@ -12,7 +12,7 @@ if ! [ -x "$(command -v protoc)" ] ; then
     exit 1
 fi
 
-# generate the reservation_service_definition.pb file that we can pass to envoy so that knows the grpc service
+# generate the greeting_service_definition.pb file that we can pass to envoy so that knows the grpc service
 # we want to expose
 protoc -I. -Isrc/main/proto --include_imports \
                 --include_source_info \
@@ -40,14 +40,14 @@ fi
 if [ "$(groups | grep -c docker)" -gt "0" ]; then
     echo "Envoy will run at port 51051 (see envoy-config.yml)"
     docker run -it --rm --name envoy --network="host" \
-             -v "$(pwd)/reservation_service_definition.pb:/data/reservation_service_definition.pb:ro" \
+             -v "$(pwd)/greeting_service_definition.pb:/data/greeting_service_definition.pb:ro" \
              -v "$(pwd)/envoy-config.yml:/etc/envoy/envoy.yaml:ro" \
              envoyproxy/envoy
 else
     echo "you are not in the docker group, running with sudo"
     echo "Envoy will run at port 51051 (see envoy-config.yml)"
     sudo docker run -it --rm --name envoy --network="host"\
-             -v "$(pwd)/reservation_service_definition.pb:/data/reservation_service_definition.pb:ro" \
+             -v "$(pwd)/greeting_service_definition.pb:/data/greeting_service_definition.pb:ro" \
              -v "$(pwd)/envoy-config.yml:/etc/envoy/envoy.yaml:ro" \
              envoyproxy/envoy
 fi
