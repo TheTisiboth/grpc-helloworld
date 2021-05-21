@@ -42,12 +42,12 @@ if [ "$(groups | grep -c docker)" -gt "0" ]; then
     docker run -it --rm --name envoy --network="host" \
              -v "$(pwd)/greeting_service_definition.pb:/data/greeting_service_definition.pb:ro" \
              -v "$(pwd)/envoy-config.yml:/etc/envoy/envoy.yaml:ro" \
-             envoyproxy/envoy:v1.18.3
+             envoyproxy/envoy:v1.18.2
 else
     echo "you are not in the docker group, running with sudo"
     echo "Envoy will run at port 51051 (see envoy-config.yml)"
     sudo docker run -it --rm --name envoy --network="host"\
              -v "$(pwd)/greeting_service_definition.pb:/data/greeting_service_definition.pb:ro" \
              -v "$(pwd)/envoy-config.yml:/etc/envoy/envoy.yaml:ro" \
-             envoyproxy/envoy:v1.18.3
+             envoyproxy/envoy:v1.18.2
 fi
