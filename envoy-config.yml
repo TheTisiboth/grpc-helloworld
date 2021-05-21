@@ -27,7 +27,7 @@ static_resources:
             # configuration docs: https://github.com/envoyproxy/envoy/blob/master/api/envoy/config/filter/http/transcoder/v2/transcoder.proto
             config:
               proto_descriptor: "/data/greeting_service_definition.pb"             #4
-              services: ["HelloService"]                        #5
+              services: ["helloworld.HelloService"]                        #5
               print_options:
                 add_whitespace: true
                 always_print_primitive_fields: true
