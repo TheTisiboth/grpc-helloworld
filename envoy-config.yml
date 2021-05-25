@@ -54,5 +54,5 @@ static_resources:
         - endpoint:
           address: 
             socket_address:
-              address: 172.17.0.1                       #8
+              address: localhost                     #8
               port_value: 53000
