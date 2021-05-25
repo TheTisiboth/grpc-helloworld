@@ -17,6 +17,6 @@ message HelloResponse {
 
 service HelloService {
 	rpc hello (HelloRequest) returns (HelloResponse){
-		option (google.api.http) = { get: "test/greeting" };
+		option (google.api.http) = { get: "/greeting" };
 	}
 }

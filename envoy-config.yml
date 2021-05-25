@@ -21,7 +21,7 @@ static_resources:
             - name: local_service
               domains: ["*"]
               routes:
-              - match: { prefix: "/" , grpc: {}}  # 3a grpc:{} means that requests are only forwarded if they are found in the grpc service definition, returning 404 for others
+              - match: { prefix: "/helloworld.HelloService" , grpc: {}}  # 3a grpc:{} means that requests are only forwarded if they are found in the grpc service definition, returning 404 for others
                 route: { cluster: grpc-backend-services, timeout: { seconds: 60 } }   #3b
           http_filters:
           - name: envoy.filters.http.grpc_json_transcoder
@@ -34,7 +34,7 @@ static_resources:
                 always_print_primitive_fields: true
                 always_print_enums_as_ints: false
                 preserve_proto_field_names: false                                     #6
-          - name: envoy.router
+          - name: envoy.filters.http.router
 
   clusters:
   - name: grpc-backend-services                  #7
@@ -54,8 +54,5 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                # WARNING: "docker.for.mac.localhost" has been deprecated from Docker v18.03.0.
-                # If you're running an older version of Docker, please use "docker.for.mac.localhost" instead.
-                # Reference: https://docs.docker.com/docker-for-mac/release-notes/#docker-community-edition-18030-ce-mac59-2018-03-26
                 address: host.docker.internal                #8
                 port_value: 53000
