@@ -54,6 +54,6 @@ static_resources:
       - lb_endpoints:
         - endpoint:
           address: 
-            - socket_address:
+            socket_address:
               address: 127.0.0.1                       #8
               port_value: 53000
