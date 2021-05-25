@@ -12,7 +12,7 @@ static_resources:
     - filters:
       - name: envoy.filters.network.http_connection_manager
         typed_config:
-      	  "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager # Explicit v3
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager # Explicit v3
           stat_prefix: grpc_json
           codec_type: AUTO
           route_config:
@@ -43,8 +43,17 @@ static_resources:
     type: logical_dns
     lb_policy: round_robin
     dns_lookup_family: V4_ONLY
-    http2_protocol_options: {}
-    hosts:
-    - socket_address:
-        address: 127.0.0.1                       #8
-        port_value: 53000
+    typed_extension_protocol_options:
+      envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+        "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+        explicit_http_config:
+          http2_protocol_options: {}
+    load_assignment:
+      cluster_name: grpc-backend-services
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+          address: 
+            - socket_address:
+              address: 127.0.0.1                       #8
+              port_value: 53000
