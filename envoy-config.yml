@@ -21,7 +21,7 @@ static_resources:
             - name: local_service
               domains: ["*"]
               routes:
-              - match: { prefix: "/helloworld.HelloService" , grpc: {}}  # 3a grpc:{} means that requests are only forwarded if they are found in the grpc service definition, returning 404 for others
+              - match: { prefix: "/" , grpc: {}}  # 3a grpc:{} means that requests are only forwarded if they are found in the grpc service definition, returning 404 for others
                 route: { cluster: grpc-backend-services, timeout: { seconds: 60 } }   #3b
           http_filters:
           - name: envoy.filters.http.grpc_json_transcoder
@@ -54,5 +54,5 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: host.docker.internal                #8
+                address: 127.0.0.1                #8
                 port_value: 53000
